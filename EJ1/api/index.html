@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <h2>Listar personajes de cada episodio</h2>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <a class="btn btn-outline-secondary" href="/listar?episodio=1" id="listar">Listar</a>
+        </div>
+        <select class="custom-select" id="episodios1" onchange="listarLink()">
+          <option value="1" selected>Episodio 1</option>
+          <option value="2">Episodio 2</option>
+          <option value="3">Episodio 3</option>
+          <option value="4">Episodio 4</option>
+          <option value="5">Episodio 5</option>
+          <option value="6">Episodio 6</option>
+          <option value="7">Episodio 7</option>
+          <option value="8">Episodio 8</option>
+          <option value="9">Episodio 9</option>
+        </select>
+    </div>
+    <h2>Cargar/Eliminar personaje de un episodio</h2>
+    <div class="input-group">
+        <select class="custom-select" id="episodios2" onchange="cargar_eliminarLink()">
+            <option value="1" selected>Episodio 1</option>
+            <option value="2">Episodio 2</option>
+            <option value="3">Episodio 3</option>
+            <option value="4">Episodio 4</option>
+            <option value="5">Episodio 5</option>
+            <option value="6">Episodio 6</option>
+            <option value="7">Episodio 7</option>
+            <option value="8">Episodio 8</option>
+            <option value="9">Episodio 9</option>
+        </select>
+        <input type="text" class="form-control" aria-label="Text input with dropdown button" id="personaje" placeholder="Nombre del personaje" onchange="cargar_eliminarLink()">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acción</button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" id="cargar">Cargar</a>
+                <a class="dropdown-item" href="#" id="eliminar">Eliminar</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        function listarLink() {
+            document.getElementById('listar').href = "/listar?episodio=" + document.getElementById('episodios1').value;
+        }
+
+        function cargar_eliminarLink() {
+            document.getElementById('cargar').href = "/cargar?episodio=" + document.getElementById('episodios2').value + "&personaje=" + document.getElementById('personaje').value;
+            document.getElementById('eliminar').href = "/eliminar?episodio=" + document.getElementById('episodios2').value + "&personaje=" + document.getElementById('personaje').value;
+        }
+    </script>
+</body>
+
+</html>
