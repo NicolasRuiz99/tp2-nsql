@@ -1,1 +1,1 @@
-TP N°2 - BBDD NSQL - Ruiz Nicolás - UADER FCyTs
+TP N°2 - BBDD NSQL - Ruiz Nicolás - UADER FCyT
