@@ -5,25 +5,26 @@ var port = 3000
 
 const redisClient = redis.createClient(6379, "redis");
 const app = express()
-app.set('port', port)
+app.set('port', port);
+app.set('view engine', 'hbs');
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.render('home');
 });
 
 app.get('/cargar', function(req, res) {
     redisClient.lpush(req.query.episodio, [req.query.personaje]);
-    res.send(JSON.stringify("personaje cargado"))
+    res.render('cargar');
 })
 
 app.get('/eliminar', function(req, res) {
     redisClient.lrem(req.query.episodio, 1, req.query.personaje);
-    res.send(JSON.stringify("personaje eliminado"))
+    res.render('eliminar')
 })
 
 app.get('/listar', function(req, res) {
     redisClient.lrange(req.query.episodio, 0, -1, function(err, values) {
-        res.send(JSON.stringify(values))
+        res.render('listado', { personajes: values, nro: req.query.episodio })
     })
 })
 
