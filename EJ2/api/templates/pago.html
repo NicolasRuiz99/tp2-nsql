@@ -9,33 +9,11 @@
 </head>
 
 <body>
-    <table class="table">
-        <h2>Capítulos de The Mandalorian</h2>
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ep in nombres %}
-            <tr>
-                <th scope="row">{{ep}}</th>
-                <td>{{nombres[ep]}}</td>
-                <td>{{estados[ep]}}</td>
-                <td>$ {{precios[ep]}}</td>
-                {% if estados[ep] == 'disponible' %}
-                <td><a class="btn btn-primary" href="/reservar?episodio={{ep}}&precio={{precios[ep]}}">Alquilar</a></td>
-                {% else %}
-                <td><a class="btn btn-danger" disabled>No disponible</a></td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <a class="btn btn-info" href="/">Regresar</a> {% if resp %}
+    <h2>Capítulo {{nro}} alquilado exitosamente por $ {{precio}}.</h2>
+    {% else %}
+    <h2>Operacion no disponible</h2>
+    {% endif %}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

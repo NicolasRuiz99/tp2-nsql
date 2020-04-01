@@ -1,4 +1,4 @@
-from flask import Flask 
+from flask import Flask, request
 from flask import render_template
 import redis
 
@@ -42,10 +42,56 @@ app = Flask (__name__)
 
 @app.route('/')
 def index():
-    inicializar()
+    #inicializar()
+    estados = {}
+    for i in range (8):
+        estados[str(i+1)] = db.get(i+1)
+        if (estados[str(i+1)] == None):
+            estados[str(i+1)] = 'disponible'
+            db.set(i+1,'disponible')
     nombres = db.hgetall('episodios')
-    estados = db.mget(1,2,3,4,5,6,7,8)
-    return render_template ('/index.html',estados = estados,nombres = nombres)
+    precios = db.hgetall('episodiosP')
+    return render_template ('/index.html',estados = estados,nombres = nombres,precios = precios)
+
+@app.route('/reservar',methods=['GET'])
+def reservar():
+    nombre = ''
+    ep = request.args.get('episodio')
+    precio = request.args.get('precio')
+    if (db.exists(ep)):
+        estado = db.get(ep)
+        if estado == 'disponible':
+            nombre = db.hget('episodios',ep)
+            if (precio == db.hget('episodiosP',ep)):
+                resp = True
+                db.set(ep,'reservado')
+                db.expire(ep,240)
+            else:
+                resp = False
+        else:
+            resp = False
+    else:
+        resp = False
+    return render_template ('/reservar.html',resp = resp,nombre = nombre,precio = precio,nro = ep)
+
+@app.route('/alquilar',methods=['GET'])
+def alquilar():
+    ep = request.args.get('nro')
+    precio = request.args.get('precio')
+    if (db.exists(ep)):
+        estado = db.get(ep)
+        if estado != 'alquilado':
+            if (precio == db.hget('episodiosP',ep)):
+                resp = True
+                db.set(ep,'alquilado')
+                db.expire(ep,86400)
+            else:
+                resp = False
+        else:
+            resp = False
+    else:
+        resp = False
+    return render_template ('/pago.html',resp = resp,nro = ep,precio = precio)
 
 if __name__ == '__main__':
     app.run(host='localhost',port='5000', debug=False)
